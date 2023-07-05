@@ -7,5 +7,8 @@ def distance(x1 : float, y1 : float, x2 : float, y2 : float) -> float:
 
 def calculate_ratio(heart_length: float, thorax_length: float) -> float:
     """ Calculate ratio between heart and thorax """
-    print("TODO: calculate_ratio")
-    return 0
+
+def calculate_ratio(heart_length, thorax_length):
+    ratio = heart_length/thorax_length
+    return ratio
+    

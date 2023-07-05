@@ -5,7 +5,9 @@
         "ipady",
         "iterrows",
         "pytest",
-        "venv"
+        "scrollregion",
+        "venv",
+        "yscrollcommand"
     ],
     "cmake.configureOnOpen": false,
     "terminal.integrated.defaultProfile.windows": "Command Prompt",

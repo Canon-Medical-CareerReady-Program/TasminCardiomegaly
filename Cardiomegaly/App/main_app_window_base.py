@@ -1,4 +1,7 @@
 from enum import Enum
+from msilib.schema import SelfReg
+from tkinter import Canvas, Scrollbar, filedialog
+from tkinter.tix import IMAGE
 from typing import Optional
 
 import tkinter as tk
@@ -72,7 +75,7 @@ class MainAppWindowBase:
         self.last_full_measurement_heart_val = None
         self.last_full_measurement_thorax_val = None
 
-    def update_image(self, image_path):
+    def update_image(self,image_path):
         if self.image:
             self.image.close()
         self.image = Image.open(image_path)
@@ -80,9 +83,26 @@ class MainAppWindowBase:
 
         # TODO: Image needs to be scaled to fit the canvas (right now it might get cropped)
 
+        width = self.image.width
+        height = self.image.height
+       
+    
         if self.image_widget:
             self.canvas.delete(self.image_widget)
         self.image_widget = self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
+        self.canvas.config(width=width, height=height)
+
+        canvas_width = self.canvas.winfo_width()
+        canvas_height = self.canvas.winfo_height()
+
+        image_width, image_height = self.image.size
+        aspect_ratio = min(canvas_width / image_width, canvas_height / image_height)
+        new_width = int(image_width * aspect_ratio)
+        new_height = int(image_height * aspect_ratio)
+
+        resized_image = self.image.resize((new_width, new_height), Image.ANTIALIAS)
+
+
 
     def load_image(self):
         filename = askopenfilename()
@@ -92,6 +112,7 @@ class MainAppWindowBase:
             self.update_image(filename)
         else:
             print("No file selected")
+
 
     def getHeartColor(self):
         return self.DEFAULT_COLOR_HEART
